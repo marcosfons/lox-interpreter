@@ -1,4 +1,4 @@
-package edu.ufsj;
+package edu.ufsj.lox;
 
 import java.io.BufferedReader;
 import java.io.IOException;
