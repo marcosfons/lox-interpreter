@@ -1,4 +1,4 @@
-package edu.ufsj;
+package edu.ufsj.lox;
 
 import static org.junit.Assert.assertTrue;
 

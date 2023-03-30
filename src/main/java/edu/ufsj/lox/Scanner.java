@@ -3,15 +3,15 @@ package edu.ufsj.lox;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Scanner {
+class Scanner {
 
     private int start = 0;
     private int current = 0;
     private int line = 1;
     private final String source;
-    public final List<Token> tokens = new ArrayList<Token>();
+    private final List<Token> tokens = new ArrayList<Token>();
 
-    public Scanner(String source) {
+    Scanner(String source) {
         this.source = source;
     }
 
@@ -110,7 +110,7 @@ public class Scanner {
             scanToken();
         }
 
-        tokens.add(new Token(TokenType.EOF, "",null, line));
+        tokens.add(new Token(TokenType.EOF, "", null, line));
 
         return tokens;
     }
