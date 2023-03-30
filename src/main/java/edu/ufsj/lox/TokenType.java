@@ -1,6 +1,6 @@
 package edu.ufsj.lox;
 
-enum TokenType {
+public enum TokenType {
     LEFT_PAREN,
     RIGHT_PAREN,
     LEFT_BRACE,
