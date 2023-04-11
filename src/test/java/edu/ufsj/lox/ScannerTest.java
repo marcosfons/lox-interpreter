@@ -104,4 +104,97 @@ public class ScannerTest {
         );
     }
 
+    @Test
+    public void shouldCorrectlyIgnoreMultiLineComments() {
+        final Scanner scanner = new Scanner(String.join("\n",
+            "( )",
+            "/* This is a multiline comment",
+            "   This is the second line of it",
+            "*/",
+            "/"
+        ));
+        final List<Token> tokens = scanner.scanTokens();
+        
+        assertArrayEquals(
+            new ArrayList<Token>(Arrays.asList(
+                new Token(TokenType.LEFT_PAREN, "(", null, 1),
+                new Token(TokenType.RIGHT_PAREN, ")", null, 1),
+                new Token(TokenType.SLASH, "/", null, 4),
+                new Token(TokenType.EOF, null, null, 5)
+            )).toArray(),
+            tokens.toArray()
+        );
+    }
+
+    @Test
+    public void shouldCorrectlyIgnoreMultiLineCommentsWithinOneline() {
+        final Scanner scanner = new Scanner(String.join("\n",
+            "( )",
+            "/* This is a multiline comment in one line only */",
+            "/"
+        ));
+        final List<Token> tokens = scanner.scanTokens();
+        
+        assertArrayEquals(
+            new ArrayList<Token>(Arrays.asList(
+                new Token(TokenType.LEFT_PAREN, "(", null, 1),
+                new Token(TokenType.RIGHT_PAREN, ")", null, 1),
+                new Token(TokenType.SLASH, "/", null, 3),
+                new Token(TokenType.EOF, null, null, 3)
+            )).toArray(),
+            tokens.toArray()
+        );
+    }
+
+    @Test
+    public void shouldCorrectlyIgnoreMultiLineCommentsWithTokenAfterIt() {
+        final Scanner scanner = new Scanner("{/* This is a multiline comment in one line only */}");
+        final List<Token> tokens = scanner.scanTokens();
+        
+        assertArrayEquals(
+            new ArrayList<Token>(Arrays.asList(
+                new Token(TokenType.LEFT_PAREN, "{", null, 1),
+                new Token(TokenType.RIGHT_PAREN, "}", null, 1),
+                new Token(TokenType.EOF, null, null, 1)
+            )).toArray(),
+            tokens.toArray()
+        );
+    }
+
+    @Test
+    public void shouldCorrectlyIgnoreMultiLineCommentsThatHasStarInIt() {
+        final Scanner scanner = new Scanner(String.join("\n",
+            "/* Simple example of multiplication 2 * 3 = 6 *",
+            "   Finishing comment */",
+            "*"
+        ));
+        final List<Token> tokens = scanner.scanTokens();
+        
+        assertArrayEquals(
+            new ArrayList<Token>(Arrays.asList(
+                new Token(TokenType.STAR, "*", null, 3),
+                new Token(TokenType.EOF, null, null, 3)
+            )).toArray(),
+            tokens.toArray()
+        );
+    }
+
+    @Test
+    public void shouldCorrectlyIgnoreMultiLineCommentsWithTokenAfterIt22() {
+        final Scanner scanner = new Scanner(String.join("\n",
+            "/*",
+            "   Finishing comment */",
+            "*"
+        ));
+        final List<Token> tokens = scanner.scanTokens();
+        
+        assertArrayEquals(
+            new ArrayList<Token>(Arrays.asList(
+                new Token(TokenType.STAR, "*", null, 3),
+                new Token(TokenType.EOF, null, null, 3)
+            )).toArray(),
+            tokens.toArray()
+        );
+    }
+
 }

@@ -67,24 +67,39 @@ class Scanner {
             case '!': 
                 addToken(match('=') ? TokenType.BANG_EQUAL : TokenType.BANG);
                 break;
-
             case '=': 
                 addToken(match('=') ? TokenType.EQUAL_EQUAL : TokenType.EQUAL);
                 break;
-
             case '>': 
                 addToken(match('=') ? TokenType.GREATER_EQUAL : TokenType.GREATER);
                 break;
-
             case '<': 
                 addToken(match('=') ? TokenType.LESS_EQUAL : TokenType.LESS);
                 break;
 
             case '/':
-                if (match('/')) {
+                if (match('/')) { // Single line comments
                     while (peak() != '\n' && !isAtEnd())
                         advance();
-                } else {
+                } else if (match('*')) { // Multi line comments
+                    boolean commentTerminated = false;
+
+                    while (!isAtEnd()) {
+                        if (match('*') && match('/')) {
+                            commentTerminated = true;
+                            break;
+                        } else if (peak() == '\n') {
+                            line++;
+                        }
+
+                        advance();
+                    }
+
+                    if (!commentTerminated) {
+                        Lox.error(line, "Unterminated comment");
+                        break;
+                    }
+                } else { // Slash
                     addToken(TokenType.SLASH);
                 }
                 break;
@@ -110,7 +125,7 @@ class Scanner {
             scanToken();
         }
 
-        tokens.add(new Token(TokenType.EOF, "", null, line));
+        tokens.add(new Token(TokenType.EOF, null, null, line));
 
         return tokens;
     }
