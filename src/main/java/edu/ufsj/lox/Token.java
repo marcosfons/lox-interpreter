@@ -1,6 +1,6 @@
 package edu.ufsj.lox;
 
-class Token {
+public class Token {
     
     final TokenType type;
     final String lexeme;
@@ -16,7 +16,21 @@ class Token {
 
     @Override
     public String toString() {
-        return type + " " + lexeme + " " + literal;
+        return type + " " + lexeme + " " + literal + " " + line;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || !(obj instanceof Token)) {
+            return false;
+        }
+
+        final Token otherToken = (Token) obj;
+
+        return this.type == otherToken.type && 
+               (this.lexeme != null) ? this.lexeme.equals(otherToken.lexeme) : otherToken.lexeme == null && 
+               (this.literal != null) ? this.literal == otherToken.literal : otherToken.literal == null && 
+               this.line == otherToken.line;
     }
 
 }
