@@ -1,43 +1,6 @@
 package edu.ufsj.lox;
 
-import static edu.ufsj.lox.TokenType.AND;
-import static edu.ufsj.lox.TokenType.BANG;
-import static edu.ufsj.lox.TokenType.BANG_EQUAL;
-import static edu.ufsj.lox.TokenType.CLASS;
-import static edu.ufsj.lox.TokenType.COMMA;
-import static edu.ufsj.lox.TokenType.DOT;
-import static edu.ufsj.lox.TokenType.ELSE;
-import static edu.ufsj.lox.TokenType.EOF;
-import static edu.ufsj.lox.TokenType.EQUAL;
-import static edu.ufsj.lox.TokenType.EQUAL_EQUAL;
-import static edu.ufsj.lox.TokenType.FALSE;
-import static edu.ufsj.lox.TokenType.FOR;
-import static edu.ufsj.lox.TokenType.FUN;
-import static edu.ufsj.lox.TokenType.GREATER;
-import static edu.ufsj.lox.TokenType.GREATER_EQUAL;
-import static edu.ufsj.lox.TokenType.IF;
-import static edu.ufsj.lox.TokenType.LEFT_BRACE;
-import static edu.ufsj.lox.TokenType.LEFT_PAREN;
-import static edu.ufsj.lox.TokenType.LESS;
-import static edu.ufsj.lox.TokenType.LESS_EQUAL;
-import static edu.ufsj.lox.TokenType.MINUS;
-import static edu.ufsj.lox.TokenType.NIL;
-import static edu.ufsj.lox.TokenType.NUMBER;
-import static edu.ufsj.lox.TokenType.OR;
-import static edu.ufsj.lox.TokenType.PLUS;
-import static edu.ufsj.lox.TokenType.PRINT;
-import static edu.ufsj.lox.TokenType.RETURN;
-import static edu.ufsj.lox.TokenType.RIGHT_BRACE;
-import static edu.ufsj.lox.TokenType.RIGHT_PAREN;
-import static edu.ufsj.lox.TokenType.SEMICOLON;
-import static edu.ufsj.lox.TokenType.SLASH;
-import static edu.ufsj.lox.TokenType.STAR;
-import static edu.ufsj.lox.TokenType.STRING;
-import static edu.ufsj.lox.TokenType.SUPER;
-import static edu.ufsj.lox.TokenType.THIS;
-import static edu.ufsj.lox.TokenType.TRUE;
-import static edu.ufsj.lox.TokenType.VAR;
-import static edu.ufsj.lox.TokenType.WHILE;
+import static edu.ufsj.lox.TokenType.*;    
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -55,7 +18,7 @@ class Scanner {
     private static final Map<String, TokenType> keywords;
 
     static {
-        keywords = new HashMap <String , TokenType>();
+        keywords = new HashMap <String, TokenType>();
         keywords.put("and", AND);
         keywords.put("class", CLASS);
         keywords.put("else", ELSE);
@@ -73,7 +36,6 @@ class Scanner {
         keywords.put("var", VAR);
         keywords.put("while", WHILE);
     }
-
 
     Scanner(String source) {
         this.source = source;
@@ -198,7 +160,7 @@ class Scanner {
         final String text = source.substring(start, current);
         TokenType type = keywords.get(text);
         if (type == null) {
-            type = TokenType.IDENTIFIER;
+            type = IDENTIFIER;
         }
         addToken(type);
     }

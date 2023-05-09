@@ -34,8 +34,8 @@ public class GenerateAST {
 
         writer.println(String.join("\n", 
             "package edu.ufsj.lox;",
-            "",
-            "import java.util.List;",
+            // "",
+            // "import java.util.List;",
             "",
             "abstract class " + baseName + " {"
         ));

@@ -13,8 +13,6 @@ public class Lox {
     static boolean hadError = false;
 
     private static void run(String source) {
-        System.out.println("Running command: " + source);
-
         final Scanner scanner = new Scanner(source);
         final List<Token> tokens = scanner.scanTokens();
 
