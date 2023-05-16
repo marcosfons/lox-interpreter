@@ -104,6 +104,9 @@ public class ScannerTest {
         );
     }
 
+
+    /// START Tests for Multiline comments
+
     @Test
     public void shouldCorrectlyIgnoreMultiLineComments() {
         final Scanner scanner = new Scanner(String.join("\n",
@@ -196,5 +199,7 @@ public class ScannerTest {
             tokens.toArray()
         );
     }
+
+    /// END Tests for Multiline comments
 
 }

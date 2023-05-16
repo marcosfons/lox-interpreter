@@ -108,8 +108,11 @@ class Scanner {
                         advance();
                 } else if (match('*')) { // Multi line comments
                     while (!isAtEnd()) {
-                        if (match('*') && match('/')) {
-                            break;
+                        if (match('*')) { 
+                            if (match('/')) { // Match */ end of multiline comment
+                                break;
+                            }
+                            continue;
                         } else if (peak() == '\n') {
                             line++;
                         }
@@ -119,7 +122,6 @@ class Scanner {
 
                     if (isAtEnd()) {
                         Lox.error(line, "Unterminated comment");
-                        break;
                     }
                 } else { // Slash
                     addToken(SLASH);

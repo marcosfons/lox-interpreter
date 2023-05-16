@@ -1,0 +1,17 @@
+
+
+4 * 3 = 25
+
+/*  This is a multiline comment
+    It covers multiple lines but they are
+    ignored by the compiler */
+
+/* One line "multiline" comment */
+
+/* Multiline comment with a star in it 10 * 2 = 4 */
+
+/** Multiline comment with multiple stars  **/
+
+/* Multiline comment with unicode character 😀😀*/
+
+4 * 5 = 20

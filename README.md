@@ -33,6 +33,12 @@ Interpretador da linguagem Lox feito em Java.
 O interpretador da linguagem Lox pode ser executado a partir de um arquivo ou
 como um `REPL` (read-eval-print loop).
 
+Usando `mvn`:
+```sh
+mvn package
+java -cp target/lox-interpreter-1.0-SNAPSHOT.jar edu.ufsj.lox.Lox
+```
+
 ```sh
 javac -d ./target/classes src/main/java/edu/ufsj/**/*.java
 java -cp target/classes edu.ufsj.lox.Lox
@@ -43,6 +49,12 @@ java -cp target/classes edu.ufsj.lox.Lox
 `GenerateAST` é um script responsável por criar as classes que representam as
 expressões da linguagem Lox. Isso porque, o processo para criar essas classes é
 repetitivo e bem padronizado.
+
+Usando `mvn`:
+```sh
+mvn package
+java -cp target/lox-interpreter-1.0-SNAPSHOT.jar edu.ufsj.tool.GenerateAST
+```
 
 ```sh
 javac -d ./target/classes src/main/java/edu/ufsj/**/*.java
