@@ -107,9 +107,12 @@ class Scanner {
                     while (peak() != '\n' && !isAtEnd())
                         advance();
                 } else if (match('*')) { // Multi line comments
+                    boolean finishedMultilineComment = false;
+
                     while (!isAtEnd()) {
                         if (match('*')) { 
                             if (match('/')) { // Match */ end of multiline comment
+                                finishedMultilineComment = true;
                                 break;
                             }
                             continue;
@@ -120,7 +123,7 @@ class Scanner {
                         advance();
                     }
 
-                    if (isAtEnd()) {
+                    if (isAtEnd() && !finishedMultilineComment) {
                         Lox.error(line, "Unterminated comment");
                     }
                 } else { // Slash
