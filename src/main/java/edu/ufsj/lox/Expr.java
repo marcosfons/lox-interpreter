@@ -3,6 +3,7 @@ package edu.ufsj.lox;
 abstract class Expr {
 
     interface Visitor<R> {
+        R visitTernaryExpr(Ternary expr);
         R visitBinaryExpr(Binary expr);
         R visitGroupingExpr(Grouping expr);
         R visitLiteralExpr(Literal expr);
@@ -24,6 +25,25 @@ abstract class Expr {
         @Override
         <R> R accept(Visitor<R> visitor) {
             return visitor.visitBinaryExpr(this);
+        }
+
+    }
+
+    static class Ternary extends Expr {
+
+        Ternary(Expr comparison, Expr ifTrue, Expr ifFalse) {
+            this.comparison = comparison;
+            this.ifTrue = ifTrue;
+            this.ifFalse = ifFalse;
+        }
+
+        final Expr comparison;
+        final Expr ifTrue;
+        final Expr ifFalse;
+        
+        @Override
+        <R> R accept(Visitor<R> visitor) {
+            return visitor.visitTernaryExpr(this);
         }
 
     }

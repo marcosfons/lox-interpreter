@@ -24,6 +24,9 @@ public enum TokenType {
     STRING,
     NUMBER,
 
+    QUESTION_MARK,
+    COLON,
+
     // Reserved keywords
     OR,
     AND,

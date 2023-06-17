@@ -32,10 +32,18 @@ public class Parser {
     private Expr equality() {
         Expr expr = comparison();
 
-        while (match(BANG_EQUAL, EQUAL_EQUAL)) {
-            Token operator = previous();
-            Expr right = comparison();
-            expr = new Expr.Binary(expr, operator, right);
+        if (match(QUESTION_MARK)) {
+            Expr ifTrue = expression();
+            consume(COLON, "Expect ':' after first ternary expression");
+            Expr ifFalse = expression();
+
+            expr = new Expr.Ternary(expr, ifTrue, ifFalse);
+        } else {
+            while (match(BANG_EQUAL, EQUAL_EQUAL)) {
+                Token operator = previous();
+                Expr right = comparison();
+                expr = new Expr.Binary(expr, operator, right);
+            }
         }
 
         return expr;

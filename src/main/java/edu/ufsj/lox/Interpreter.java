@@ -45,9 +45,9 @@ class Interpreter implements Expr.Visitor<Object> {
                 checkNumberOperands(expr.operator, left, right);
                 return (double) left <= (double) right;
 
-            case BANG_EQUAL: 
+            case BANG_EQUAL:
                 return !isEqual(left, right);
-            case EQUAL_EQUAL: 
+            case EQUAL_EQUAL:
                 return isEqual(left, right);
 
             default:
@@ -69,9 +69,9 @@ class Interpreter implements Expr.Visitor<Object> {
     public Object visitUnaryExpr(Unary expr) {
         Object right = evaluate(expr.right);
 
-        switch(expr.operator.type) {
+        switch (expr.operator.type) {
             case MINUS:
-                return -(double) right;    
+                return -(double) right;
             case BANG:
                 return !isTruthy(right);
             default:
@@ -83,13 +83,14 @@ class Interpreter implements Expr.Visitor<Object> {
         try {
             Object value = evaluate(expression);
             System.out.println(stringify(value));
-        } catch(RuntimeError error) {
+        } catch (RuntimeError error) {
             Lox.runtimeError(error);
         }
     }
 
     private String stringify(Object object) {
-        if (object == null) return "nil";
+        if (object == null)
+            return "nil";
 
         if (object instanceof Double) {
             String text = object.toString();
@@ -121,19 +122,33 @@ class Interpreter implements Expr.Visitor<Object> {
     }
 
     private boolean isEqual(Object a, Object b) {
-        if (a == null) return b == null;
+        if (a == null)
+            return b == null;
 
         return a.equals(b);
     }
 
     private void checkNumberOperand(Token operator, Object operand) {
-        if (operand instanceof Double) return;
+        if (operand instanceof Double)
+            return;
         throw new RuntimeError(operator, "Operand must be a number");
     }
 
     private void checkNumberOperands(Token operator, Object left, Object right) {
-        if (left instanceof Double && right instanceof Double) return;
+        if (left instanceof Double && right instanceof Double)
+            return;
         throw new RuntimeError(operator, "Operands must be numbers");
     }
-    
+
+    @Override
+    public Object visitTernaryExpr(Ternary expr) {
+        Object comparison = evaluate(expr.comparison);
+
+        if (isTruthy(comparison)) {
+            return evaluate(expr.ifTrue);
+        } else {
+            return evaluate(expr.ifFalse);
+        }
+    }
+
 }
