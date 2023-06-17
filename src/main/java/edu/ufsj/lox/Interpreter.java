@@ -145,9 +145,9 @@ class Interpreter implements Expr.Visitor<Object> {
         Object comparison = evaluate(expr.comparison);
 
         if (isTruthy(comparison)) {
-            return evaluate(expr.ifTrue);
+            return evaluate(expr.thenExpr);
         } else {
-            return evaluate(expr.ifFalse);
+            return evaluate(expr.elseExpr);
         }
     }
 

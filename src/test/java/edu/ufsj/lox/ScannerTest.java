@@ -202,4 +202,25 @@ public class ScannerTest {
 
     /// END Tests for Multiline comments
 
+
+    @Test
+    public void shouldIdentifyTernaryTokens() {
+        final Scanner scanner = new Scanner("15 > 10 ? 1 : 2");
+        final List<Token> tokens = scanner.scanTokens();
+        
+        assertArrayEquals(
+            new ArrayList<Token>(Arrays.asList(
+                new Token(TokenType.NUMBER, "15", 15, 1),
+                new Token(TokenType.GREATER, ">", null, 1),
+                new Token(TokenType.NUMBER, "10", 10, 1),
+                new Token(TokenType.QUESTION_MARK, "?", null, 1),
+                new Token(TokenType.NUMBER, "1", 1, 1),
+                new Token(TokenType.COLON, ":", null, 1),
+                new Token(TokenType.NUMBER, "2", 2, 1),
+                new Token(TokenType.EOF, null, null, 1)
+            )).toArray(),
+            tokens.toArray()
+        );
+    }
+
 }

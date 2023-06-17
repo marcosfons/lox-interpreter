@@ -8,6 +8,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
+import edu.ufsj.lox.Parser.ParseError;
+
 public class Lox {
 
     static boolean hadError = false;
@@ -20,13 +22,13 @@ public class Lox {
         final List<Token> tokens = scanner.scanTokens();
         
         final Parser parser = new Parser(tokens);
-        final Expr expression = parser.parse();
 
-        if (hadError) {
+        try {
+            Expr expression = parser.parse();
+            interpreter.interpret(expression);
+        } catch(ParseError error) {
             return;
         }
-
-        interpreter.interpret(expression);
 
         // System.out.println(new ASTPrinter().print(expression));
     }
@@ -71,7 +73,7 @@ public class Lox {
     }
 
     private static void report(int line, String where, String message) {
-        System.err.println("[line " + line + "] Error " + where + "; " + message);
+        System.err.println("[line " + line + "] Error" + where + "; " + message);
         hadError = true;
     }
 

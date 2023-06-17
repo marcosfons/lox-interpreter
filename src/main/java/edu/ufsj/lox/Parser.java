@@ -6,7 +6,7 @@ import static edu.ufsj.lox.TokenType.*;
 
 public class Parser {
 
-    private static class ParseError extends RuntimeException {}
+    static class ParseError extends RuntimeException {}
 
     private final List<Token> tokens;
     private int current = 0;
@@ -16,11 +16,7 @@ public class Parser {
     }
 
     Expr parse() {
-        try {
-            return expression();
-        } catch(ParseError error) {
-            return null;
-        }
+        return expression();
     }
 
     // (expression) ::= (ternary);
@@ -37,7 +33,7 @@ public class Parser {
             consume(COLON, "Expect ':' after first ternary expression");
             Expr ifFalse = expression();
 
-            expr = new Expr.Ternary(expr, ifTrue, ifFalse);
+            return new Expr.Ternary(expr, ifTrue, ifFalse);
         }
 
         return expr;
