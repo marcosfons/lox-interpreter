@@ -23,14 +23,14 @@ public class Parser {
         }
     }
 
-    // (expression) ::= (equality);
+    // (expression) ::= (ternary);
     private Expr expression() {
-        return equality();
+        return ternary();
     }
 
-    // (equality) ::= (comparison) (( != | == ) (comparison))*;
-    private Expr equality() {
-        Expr expr = comparison();
+    // <ternary> ::= <equality> ( ? <expression> : <expression> )
+    private Expr ternary() {
+        Expr expr = equality();
 
         if (match(QUESTION_MARK)) {
             Expr ifTrue = expression();
@@ -38,12 +38,19 @@ public class Parser {
             Expr ifFalse = expression();
 
             expr = new Expr.Ternary(expr, ifTrue, ifFalse);
-        } else {
-            while (match(BANG_EQUAL, EQUAL_EQUAL)) {
-                Token operator = previous();
-                Expr right = comparison();
-                expr = new Expr.Binary(expr, operator, right);
-            }
+        }
+
+        return expr;
+    }
+
+    // (equality) ::= (comparison) (( != | == ) (comparison))*;
+    private Expr equality() {
+        Expr expr = comparison();
+
+        while (match(BANG_EQUAL, EQUAL_EQUAL)) {
+            Token operator = previous();
+            Expr right = comparison();
+            expr = new Expr.Binary(expr, operator, right);
         }
 
         return expr;
@@ -183,7 +190,6 @@ public class Parser {
             // advance();
         }
     }
-
 
     private ParseError error(Token token, String message){
         Lox.error(token, message);
