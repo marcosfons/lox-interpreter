@@ -129,13 +129,13 @@ abstract class Expr {
 
     static class Ternary extends Expr {
 
-        Ternary(Expr comparison, Expr thenExpr, Expr elseExpr) {
-            this.comparison = comparison;
+        Ternary(Expr condition, Expr thenExpr, Expr elseExpr) {
+            this.condition = condition;
             this.thenExpr = thenExpr;
             this.elseExpr = elseExpr;
         }
 
-        final Expr comparison;
+        final Expr condition;
         final Expr thenExpr;
         final Expr elseExpr;
         
@@ -153,7 +153,7 @@ abstract class Expr {
             Ternary otherExpr = (Ternary) obj;
             
             return 
-                this.comparison.equals(otherExpr.comparison) &&
+                this.condition.equals(otherExpr.condition) &&
                 this.thenExpr.equals(otherExpr.thenExpr) &&
                 this.elseExpr.equals(otherExpr.elseExpr);
         }

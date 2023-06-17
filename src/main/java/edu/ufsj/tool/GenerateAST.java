@@ -23,7 +23,7 @@ public class GenerateAST {
                 "Grouping : Expr expression",
                 "Literal  : Object value",
                 "Unary    : Token operator, Expr right",
-                "Ternary  : Expr comparison, Expr thenExpr, Expr elseExpr"
+                "Ternary  : Expr condition, Expr thenExpr, Expr elseExpr"
             ),
             "    "
         );
@@ -35,8 +35,6 @@ public class GenerateAST {
 
         writer.println(String.join("\n", 
             "package edu.ufsj.lox;",
-            // "",
-            // "import java.util.List;",
             "",
             "abstract class " + baseName + " {"
         ));

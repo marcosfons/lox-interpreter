@@ -104,7 +104,7 @@ class Interpreter implements Expr.Visitor<Object> {
         return object.toString();
     }
 
-    private Object evaluate(Expr expr) {
+    public Object evaluate(Expr expr) {
         return expr.accept(this);
     }
 
@@ -142,9 +142,9 @@ class Interpreter implements Expr.Visitor<Object> {
 
     @Override
     public Object visitTernaryExpr(Ternary expr) {
-        Object comparison = evaluate(expr.comparison);
+        Object condition = evaluate(expr.condition);
 
-        if (isTruthy(comparison)) {
+        if (isTruthy(condition)) {
             return evaluate(expr.thenExpr);
         } else {
             return evaluate(expr.elseExpr);
