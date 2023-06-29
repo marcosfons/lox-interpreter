@@ -88,6 +88,9 @@ class Scanner {
 
             case '"': string(); break;
 
+            case ':': addToken(COLON); break;
+            case '?': addToken(QUESTION_MARK); break;
+
             case ' ':
             case '\r':
             case '\t':

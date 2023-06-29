@@ -7,6 +7,7 @@ abstract class Expr {
         R visitGroupingExpr(Grouping expr);
         R visitLiteralExpr(Literal expr);
         R visitUnaryExpr(Unary expr);
+        R visitTernaryExpr(Ternary expr);
     }
 
     static class Binary extends Expr {
@@ -25,6 +26,20 @@ abstract class Expr {
         <R> R accept(Visitor<R> visitor) {
             return visitor.visitBinaryExpr(this);
         }
+        
+        @Override
+        public boolean equals(Object obj) {
+            if (obj == null || !(obj instanceof Binary)) {
+                return false;
+            }
+            
+            Binary otherExpr = (Binary) obj;
+            
+            return 
+                this.left.equals(otherExpr.left) &&
+                this.operator.equals(otherExpr.operator) &&
+                this.right.equals(otherExpr.right);
+        }
 
     }
 
@@ -40,6 +55,18 @@ abstract class Expr {
         <R> R accept(Visitor<R> visitor) {
             return visitor.visitGroupingExpr(this);
         }
+        
+        @Override
+        public boolean equals(Object obj) {
+            if (obj == null || !(obj instanceof Grouping)) {
+                return false;
+            }
+            
+            Grouping otherExpr = (Grouping) obj;
+            
+            return 
+                this.expression.equals(otherExpr.expression);
+        }
 
     }
 
@@ -54,6 +81,18 @@ abstract class Expr {
         @Override
         <R> R accept(Visitor<R> visitor) {
             return visitor.visitLiteralExpr(this);
+        }
+        
+        @Override
+        public boolean equals(Object obj) {
+            if (obj == null || !(obj instanceof Literal)) {
+                return false;
+            }
+            
+            Literal otherExpr = (Literal) obj;
+            
+            return 
+                this.value.equals(otherExpr.value);
         }
 
     }
@@ -72,10 +111,58 @@ abstract class Expr {
         <R> R accept(Visitor<R> visitor) {
             return visitor.visitUnaryExpr(this);
         }
+        
+        @Override
+        public boolean equals(Object obj) {
+            if (obj == null || !(obj instanceof Unary)) {
+                return false;
+            }
+            
+            Unary otherExpr = (Unary) obj;
+            
+            return 
+                this.operator.equals(otherExpr.operator) &&
+                this.right.equals(otherExpr.right);
+        }
+
+    }
+
+    static class Ternary extends Expr {
+
+        Ternary(Expr condition, Expr thenExpr, Expr elseExpr) {
+            this.condition = condition;
+            this.thenExpr = thenExpr;
+            this.elseExpr = elseExpr;
+        }
+
+        final Expr condition;
+        final Expr thenExpr;
+        final Expr elseExpr;
+        
+        @Override
+        <R> R accept(Visitor<R> visitor) {
+            return visitor.visitTernaryExpr(this);
+        }
+        
+        @Override
+        public boolean equals(Object obj) {
+            if (obj == null || !(obj instanceof Ternary)) {
+                return false;
+            }
+            
+            Ternary otherExpr = (Ternary) obj;
+            
+            return 
+                this.condition.equals(otherExpr.condition) &&
+                this.thenExpr.equals(otherExpr.thenExpr) &&
+                this.elseExpr.equals(otherExpr.elseExpr);
+        }
 
     }
 
     abstract <R> R accept(Visitor<R> visitor);
+
+    abstract public boolean equals(Object obj);
 
 }
 

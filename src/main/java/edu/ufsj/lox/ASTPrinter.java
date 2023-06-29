@@ -3,6 +3,7 @@ package edu.ufsj.lox;
 import edu.ufsj.lox.Expr.Binary;
 import edu.ufsj.lox.Expr.Grouping;
 import edu.ufsj.lox.Expr.Literal;
+import edu.ufsj.lox.Expr.Ternary;
 import edu.ufsj.lox.Expr.Unary;
 
 public class ASTPrinter implements Expr.Visitor<String> {
@@ -44,6 +45,12 @@ public class ASTPrinter implements Expr.Visitor<String> {
         builder.append(")");
 
         return builder.toString();
+    }
+
+    @Override
+    public String visitTernaryExpr(Ternary expr) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'visitTernaryExpr'");
     }
 
 }

@@ -2,6 +2,8 @@ package edu.ufsj.lox;
 
 import static org.junit.Assert.assertArrayEquals;
 
+import static edu.ufsj.lox.TokenType.*;    
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -17,11 +19,11 @@ public class ScannerTest {
         
         assertArrayEquals(
             new ArrayList<Token>(Arrays.asList(
-                new Token(TokenType.EQUAL_EQUAL, "==", null, 1), 
-                new Token(TokenType.BANG_EQUAL, "!=", null, 1), 
-                new Token(TokenType.GREATER_EQUAL, ">=", null, 1), 
-                new Token(TokenType.LESS_EQUAL, "<=", null, 1), 
-                new Token(TokenType.EOF, null, null, 1)
+                new Token(EQUAL_EQUAL, "==", null, 1), 
+                new Token(BANG_EQUAL, "!=", null, 1), 
+                new Token(GREATER_EQUAL, ">=", null, 1), 
+                new Token(LESS_EQUAL, "<=", null, 1), 
+                new Token(EOF, null, null, 1)
             )).toArray(),
             tokens.toArray()
         );
@@ -34,22 +36,22 @@ public class ScannerTest {
         
         assertArrayEquals(
             new ArrayList<Token>(Arrays.asList(
-                new Token(TokenType.LEFT_PAREN, "(", null, 1),
-                new Token(TokenType.RIGHT_PAREN, ")", null, 1),
-                new Token(TokenType.LEFT_BRACE, "{", null, 1),
-                new Token(TokenType.RIGHT_BRACE, "}", null, 1),
-                new Token(TokenType.COMMA, ",", null, 1),
-                new Token(TokenType.DOT, ".", null, 1),
-                new Token(TokenType.MINUS, "-", null, 1),
-                new Token(TokenType.PLUS, "+", null, 1),
-                new Token(TokenType.SEMICOLON, ";", null, 1),
-                new Token(TokenType.SLASH, "/", null, 1),
-                new Token(TokenType.STAR, "*", null, 1),
-                new Token(TokenType.BANG, "!", null, 1),
-                new Token(TokenType.EQUAL, "=", null, 1),
-                new Token(TokenType.GREATER, ">", null, 1),
-                new Token(TokenType.LESS, "<", null, 1),
-                new Token(TokenType.EOF, null, null, 1)
+                new Token(LEFT_PAREN, "(", null, 1),
+                new Token(RIGHT_PAREN, ")", null, 1),
+                new Token(LEFT_BRACE, "{", null, 1),
+                new Token(RIGHT_BRACE, "}", null, 1),
+                new Token(COMMA, ",", null, 1),
+                new Token(DOT, ".", null, 1),
+                new Token(MINUS, "-", null, 1),
+                new Token(PLUS, "+", null, 1),
+                new Token(SEMICOLON, ";", null, 1),
+                new Token(SLASH, "/", null, 1),
+                new Token(STAR, "*", null, 1),
+                new Token(BANG, "!", null, 1),
+                new Token(EQUAL, "=", null, 1),
+                new Token(GREATER, ">", null, 1),
+                new Token(LESS, "<", null, 1),
+                new Token(EOF, null, null, 1)
             )).toArray(),
             tokens.toArray()
         );
@@ -67,13 +69,13 @@ public class ScannerTest {
         
         assertArrayEquals(
             new ArrayList<Token>(Arrays.asList(
-                new Token(TokenType.LEFT_PAREN, "(", null, 1),
-                new Token(TokenType.RIGHT_PAREN, ")", null, 1),
-                new Token(TokenType.LEFT_BRACE, "{", null, 2),
-                new Token(TokenType.RIGHT_BRACE, "}", null, 2),
-                new Token(TokenType.PLUS, "+", null, 3),
-                new Token(TokenType.SEMICOLON, ";", null, 4),
-                new Token(TokenType.EOF, null, null, 4)
+                new Token(LEFT_PAREN, "(", null, 1),
+                new Token(RIGHT_PAREN, ")", null, 1),
+                new Token(LEFT_BRACE, "{", null, 2),
+                new Token(RIGHT_BRACE, "}", null, 2),
+                new Token(PLUS, "+", null, 3),
+                new Token(SEMICOLON, ";", null, 4),
+                new Token(EOF, null, null, 4)
             )).toArray(),
             tokens.toArray()
         );
@@ -94,11 +96,11 @@ public class ScannerTest {
         
         assertArrayEquals(
             new ArrayList<Token>(Arrays.asList(
-                new Token(TokenType.LEFT_PAREN, "(", null, 1),
-                new Token(TokenType.RIGHT_PAREN, ")", null, 1),
-                new Token(TokenType.PLUS, "+", null, 4),
-                new Token(TokenType.SLASH, "/", null, 5),
-                new Token(TokenType.EOF, null, null, 7)
+                new Token(LEFT_PAREN, "(", null, 1),
+                new Token(RIGHT_PAREN, ")", null, 1),
+                new Token(PLUS, "+", null, 4),
+                new Token(SLASH, "/", null, 5),
+                new Token(EOF, null, null, 7)
             )).toArray(),
             tokens.toArray()
         );
@@ -120,10 +122,10 @@ public class ScannerTest {
         
         assertArrayEquals(
             new ArrayList<Token>(Arrays.asList(
-                new Token(TokenType.LEFT_PAREN, "(", null, 1),
-                new Token(TokenType.RIGHT_PAREN, ")", null, 1),
-                new Token(TokenType.SLASH, "/", null, 4),
-                new Token(TokenType.EOF, null, null, 5)
+                new Token(LEFT_PAREN, "(", null, 1),
+                new Token(RIGHT_PAREN, ")", null, 1),
+                new Token(SLASH, "/", null, 4),
+                new Token(EOF, null, null, 5)
             )).toArray(),
             tokens.toArray()
         );
@@ -140,10 +142,10 @@ public class ScannerTest {
         
         assertArrayEquals(
             new ArrayList<Token>(Arrays.asList(
-                new Token(TokenType.LEFT_PAREN, "(", null, 1),
-                new Token(TokenType.RIGHT_PAREN, ")", null, 1),
-                new Token(TokenType.SLASH, "/", null, 3),
-                new Token(TokenType.EOF, null, null, 3)
+                new Token(LEFT_PAREN, "(", null, 1),
+                new Token(RIGHT_PAREN, ")", null, 1),
+                new Token(SLASH, "/", null, 3),
+                new Token(EOF, null, null, 3)
             )).toArray(),
             tokens.toArray()
         );
@@ -156,9 +158,9 @@ public class ScannerTest {
         
         assertArrayEquals(
             new ArrayList<Token>(Arrays.asList(
-                new Token(TokenType.LEFT_PAREN, "{", null, 1),
-                new Token(TokenType.RIGHT_PAREN, "}", null, 1),
-                new Token(TokenType.EOF, null, null, 1)
+                new Token(LEFT_PAREN, "{", null, 1),
+                new Token(RIGHT_PAREN, "}", null, 1),
+                new Token(EOF, null, null, 1)
             )).toArray(),
             tokens.toArray()
         );
@@ -175,8 +177,8 @@ public class ScannerTest {
         
         assertArrayEquals(
             new ArrayList<Token>(Arrays.asList(
-                new Token(TokenType.STAR, "*", null, 3),
-                new Token(TokenType.EOF, null, null, 3)
+                new Token(STAR, "*", null, 3),
+                new Token(EOF, null, null, 3)
             )).toArray(),
             tokens.toArray()
         );
@@ -193,13 +195,34 @@ public class ScannerTest {
         
         assertArrayEquals(
             new ArrayList<Token>(Arrays.asList(
-                new Token(TokenType.STAR, "*", null, 3),
-                new Token(TokenType.EOF, null, null, 3)
+                new Token(STAR, "*", null, 3),
+                new Token(EOF, null, null, 3)
             )).toArray(),
             tokens.toArray()
         );
     }
 
     /// END Tests for Multiline comments
+
+
+    @Test
+    public void shouldIdentifyTernaryTokens() {
+        final Scanner scanner = new Scanner("15 > 10 ? 1 : 2");
+        final List<Token> tokens = scanner.scanTokens();
+        
+        assertArrayEquals(
+            new ArrayList<Token>(Arrays.asList(
+                new Token(NUMBER, "15", 15, 1),
+                new Token(GREATER, ">", null, 1),
+                new Token(NUMBER, "10", 10, 1),
+                new Token(QUESTION_MARK, "?", null, 1),
+                new Token(NUMBER, "1", 1, 1),
+                new Token(COLON, ":", null, 1),
+                new Token(NUMBER, "2", 2, 1),
+                new Token(EOF, null, null, 1)
+            )).toArray(),
+            tokens.toArray()
+        );
+    }
 
 }

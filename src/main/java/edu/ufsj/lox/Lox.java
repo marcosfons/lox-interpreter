@@ -8,31 +8,37 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
+import edu.ufsj.lox.Parser.ParseError;
+
 public class Lox {
 
     static boolean hadError = false;
+    static boolean hadRuntimeError = false;
+
+    private static final Interpreter interpreter = new Interpreter();
 
     private static void run(String source) {
         final Scanner scanner = new Scanner(source);
         final List<Token> tokens = scanner.scanTokens();
         
         final Parser parser = new Parser(tokens);
-        final Expr expression = parser.parse();
 
-        if (hadError) {
+        try {
+            Expr expression = parser.parse();
+            interpreter.interpret(expression);
+        } catch(ParseError error) {
             return;
         }
 
-        System.out.println(new ASTPrinter().print(expression));
+        // System.out.println(new ASTPrinter().print(expression));
     }
 
     private static void runFile(String filepath) throws IOException {
         final byte[] bytes = Files.readAllBytes(Paths.get(filepath));
         run(new String(bytes, Charset.defaultCharset()));
 
-        if (hadError) {
-            System.exit(64);
-        }
+        if (hadError) System.exit(64);
+        if (hadRuntimeError) System.exit(70);
     }
 
     private static void runPrompt() throws IOException {
@@ -61,8 +67,13 @@ public class Lox {
         }
     }
 
+    static void runtimeError(RuntimeError error) {
+        System.out.println(error.getMessage() + "\n[line " + error.token.line + "]");
+        hadRuntimeError = true;
+    }
+
     private static void report(int line, String where, String message) {
-        System.err.println("[line " + line + "] Error " + where + "; " + message);
+        System.err.println("[line " + line + "] Error" + where + "; " + message);
         hadError = true;
     }
 

@@ -22,7 +22,8 @@ public class GenerateAST {
                 "Binary   : Expr left, Token operator, Expr right",
                 "Grouping : Expr expression",
                 "Literal  : Object value",
-                "Unary    : Token operator, Expr right"
+                "Unary    : Token operator, Expr right",
+                "Ternary  : Expr condition, Expr thenExpr, Expr elseExpr"
             ),
             "    "
         );
@@ -34,8 +35,6 @@ public class GenerateAST {
 
         writer.println(String.join("\n", 
             "package edu.ufsj.lox;",
-            // "",
-            // "import java.util.List;",
             "",
             "abstract class " + baseName + " {"
         ));
@@ -53,6 +52,8 @@ public class GenerateAST {
         writer.println(String.join("\n", 
             "",
             indentation.repeat(1) + "abstract <R> R accept" + "(Visitor<R> visitor);",
+            "",
+            indentation.repeat(1) + "abstract public boolean equals(Object obj);",
             "",
             "}",
             ""
@@ -99,6 +100,25 @@ public class GenerateAST {
             indentation.repeat(2) + "@Override",
             indentation.repeat(2) + "<R> R accept(Visitor<R> visitor) {",
             indentation.repeat(3) + "return visitor.visit" + className + baseName + "(this);",
+            indentation.repeat(2) + "}",
+            indentation.repeat(2) + "",
+            indentation.repeat(2) + "@Override",
+            indentation.repeat(2) + "public boolean equals(Object obj) {",
+            indentation.repeat(3) + "if (obj == null || !(obj instanceof " + className + ")) {",
+            indentation.repeat(4) + "return false;",
+            indentation.repeat(3) + "}",
+            indentation.repeat(3) + "",
+            indentation.repeat(3) + className + " otherExpr = (" + className + ") obj;",
+            indentation.repeat(3) + "",
+            indentation.repeat(3) + "return "
+        ));
+
+        for (int i = 0; i < fields.length; i++) {
+            final String fieldName = fields[i].split(" ")[1];
+            writer.println(indentation.repeat(4) + "this." + fieldName + ".equals(otherExpr." + fieldName + (i == fields.length - 1 ? ");" : ") &&"));
+        }
+
+        writer.println(String.join("\n",
             indentation.repeat(2) + "}",
             "",
             indentation + "}"

@@ -6,7 +6,7 @@ import static edu.ufsj.lox.TokenType.*;
 
 public class Parser {
 
-    private static class ParseError extends RuntimeException {}
+    static class ParseError extends RuntimeException {}
 
     private final List<Token> tokens;
     private int current = 0;
@@ -16,16 +16,27 @@ public class Parser {
     }
 
     Expr parse() {
-        try {
-            return expression();
-        } catch(ParseError error) {
-            return null;
-        }
+        return expression();
     }
 
-    // (expression) ::= (equality);
+    // (expression) ::= (ternary);
     private Expr expression() {
-        return equality();
+        return ternary();
+    }
+
+    // <ternary> ::= <equality> ( ? <expression> : <expression> )
+    private Expr ternary() {
+        Expr expr = equality();
+
+        if (match(QUESTION_MARK)) {
+            Expr ifTrue = expression();
+            consume(COLON, "Expect ':' after first ternary expression");
+            Expr ifFalse = expression();
+
+            return new Expr.Ternary(expr, ifTrue, ifFalse);
+        }
+
+        return expr;
     }
 
     // (equality) ::= (comparison) (( != | == ) (comparison))*;
@@ -175,7 +186,6 @@ public class Parser {
             // advance();
         }
     }
-
 
     private ParseError error(Token token, String message){
         Lox.error(token, message);
