@@ -4,9 +4,9 @@
 ```
 〈expression〉 ::= <ternary>;
 
-〈ternary〉 ::= <equality> ( ? <expression> : <expression> )
+〈ternary〉 ::= <equality> ( ? <expression> : <expression> );
 
-〈equality〉 ::= <comparison> ( ( ( != | == ) <comparison> )∗ | ? <expression> : <expression>);
+〈equality〉 ::= <comparison> ( ( != | == ) <comparison> )∗ ;
 
 〈comparison〉 ::= <term> ( ( > | >= | < | <= ) <term> )∗;
 
@@ -43,6 +43,4 @@ operador é associativo à esquerda.
 
 ```
 3 < 2 ? 1 : 5 < 8 ? 2 : 3
-
-(3 < 2) ? 1 : 5 < 8 ? 2 : 3
 ```
